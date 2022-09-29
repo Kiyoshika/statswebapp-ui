@@ -1,4 +1,9 @@
 # statsapp
+This is the UI for a statistics web application.
+
+The vision for this project is to import CSV data and generate visualizations (histograms, scatter plots, etc.) as well as statistical models and perform statistical tests (t-test, anova, etc.).
+
+I am inexperienced with web development so don't expect this code to be grand.
 
 ## Project setup
 ```
