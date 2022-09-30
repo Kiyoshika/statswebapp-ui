@@ -54,11 +54,18 @@ export default {
       this.dataDropdownItems[index].click.call(this);
     },
 
-    // expecting .csv only
+    // make sure filename ends in .csv
     isValidFileName(fileName) {
-        if (fileName.length - fileName.lastIndexOf('.csv') === 4)
-            return true;
-        return false;
+      if (fileName.length - fileName.lastIndexOf('.csv') === 4)
+        return true;
+      return false;
+    },
+
+    // check if file name only contains ASCII characters (required)
+    isOnlyASCII(fileName) {
+      if (/^[\u0000-\u007f]*$/.test(fileName)) // regex to check for ASCII
+        return true
+      return false;
     },
 
     // check if file already exists, avoid uploading duplicate files to server
@@ -73,6 +80,8 @@ export default {
 
       if (!this.isValidFileName(fileName))
         alert("Please only upload '.csv' files!");
+      else if (!this.isOnlyASCII(fileName))
+        alert("File name must only contain ASCII characters!");
       else if (this.isDuplicateFile(fileName))
         alert("File already exists! Please remove it first before reuploading.");
       else {
