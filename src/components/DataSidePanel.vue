@@ -1,10 +1,10 @@
 <template>
-  <v-card>
+  <v-card flat>
     <v-navigation-drawer
       permanent
-      expand-on-hover
+      floating
       color="purple darken-4"
-      style="min-height: 90vh"
+      style="min-height: 85vh; max-height: 85vh"
       width="330"
     >
       <v-list>
@@ -16,14 +16,14 @@
             <v-list-item-title class="text-h6" style="color: #F3E5F5">
               Imported Data
             </v-list-item-title>
-            <v-list-item-subtitle style="color: #F3e5F5">
+            <v-list-item-subtitle style="color: #F3E5F5">
               Use Data > Import CSV to add files.
             </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </v-list>
 
-      <v-divider></v-divider>
+      <v-divider style="background: #F3E5F5"></v-divider>
 
       <v-list
         nav

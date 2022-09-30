@@ -9,7 +9,13 @@
 
       <!-- LEFT SIDE PANEL CONTAINING IMPORTED DATASETS -->
       <v-row no-gutters fill-height>
+        <v-col cols="3" style="max-height: 80vh">
           <data-side-panel></data-side-panel>
+        </v-col>
+
+        <v-col cols="9" style="max-height: 80vh">
+          <tab-panel></tab-panel>
+        </v-col>
       </v-row>
     </v-container>
 </template>
@@ -17,13 +23,15 @@
 <script>
   import DataSidePanel from '../components/DataSidePanel.vue';
   import NavigationBar from '../components/NavigationBar.vue';
+import TabPanel from '../components/TabPanel.vue';
 
   export default {
     name: 'Home',
 
     components: {
       DataSidePanel,
-      NavigationBar
+      NavigationBar,
+        TabPanel
     },
   }
 </script>
