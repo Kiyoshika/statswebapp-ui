@@ -8,6 +8,16 @@ export default new Vuex.Store({
     dataSetNames: [
       'sample_one.csv',
       'sample_two.csv'
+    ],
+
+    dashboardTabNames: [
+      'Sample Data One',
+      'Sample Data Two'
+    ],
+
+    dashbaordTabTypes: [
+      'dataset',
+      'dataset'
     ]
   },
   getters: {
