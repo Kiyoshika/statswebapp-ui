@@ -1,5 +1,5 @@
-# statsapp
-This is the UI for a statistics web application.
+# statswebapp UI
+This is the UI for a statistics web application (see [here](https://github.com/Kiyoshika/statswebapp-api) for the backend).
 
 The vision for this project is to import CSV data and generate visualizations (histograms, scatter plots, etc.) as well as statistical models and perform statistical tests (t-test, anova, etc.).
 
