@@ -114,7 +114,7 @@ export default {
       else if (!this.isValidSize(csvFile.size))
         alert("File must be <= 1MB in size!");
       else {
-        let serverURL = store.state.serverURL + 'DataUpload/UploadDataset';
+        let serverURL = store.state.serverURL + 'Dataset/UploadDataset';
         const formData = new FormData();
         formData.append('file', csvFile);
         await fetch(serverURL, {
@@ -125,9 +125,8 @@ export default {
             'session-id': store.state.userSessionID
           },
           body: formData
-        }).then(response => response.json())
-        .then(data => console.log(data));
-        console.log(csvFile);
+        }).then(response => console.log(response));
+      
         store.commit("addDataSet", csvFile.name);
       }
     }
