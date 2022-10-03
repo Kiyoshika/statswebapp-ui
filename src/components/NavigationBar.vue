@@ -68,25 +68,66 @@ export default {
       return false;
     },
 
+    // check that filename (besides extension) is alphanumeric
+    // this validation is done *after* checking that only ascii characters are present
+    isAlphaNumeric(fileName) {
+      console.log(fileName);
+      let truncatedFileName = fileName.substring(0, fileName.indexOf('.csv'));
+      if (truncatedFileName.length === 0) return false; /* must have non-empty filename */
+      // check if each character falls outside ASCII range for alpha/numeric characters
+      for (let i = 0; i < truncatedFileName.length; i++) {
+        let charCode = truncatedFileName.charCodeAt(i);
+        if (!(charCode > 47 && charCode < 58) && // 0-9
+            !(charCode > 64 && charCode < 91) && // a-z
+            !(charCode > 96 && charCode < 123)) { // A-Z
+              return false;
+            }
+      }
+      return true;
+    },
+
     // check if file already exists, avoid uploading duplicate files to server
     isDuplicateFile(fileName) {
         const getFile = store.state.dataSetNames.filter(name => name === fileName);
         return getFile.length > 0;
     },
 
-    uploadDataset() {
-        
-      const fileName = this.$refs.file.files[0].name;
+    // check that file is <= 1MB (1000 * 1000 bytes)
+    isValidSize(fileSize) {
+      if (fileSize > 1000 * 1000)
+        return false;
+      return true;
+    },
 
-      if (!this.isValidFileName(fileName))
+    async uploadDataset() {
+        
+      const csvFile = this.$refs.file.files[0];
+
+      if (!this.isValidFileName(csvFile.name))
         alert("Please only upload '.csv' files!");
-      else if (!this.isOnlyASCII(fileName))
+      else if (!this.isOnlyASCII(csvFile.name))
         alert("File name must only contain ASCII characters!");
-      else if (this.isDuplicateFile(fileName))
+      else if (!this.isAlphaNumeric(csvFile.name))
+        alert("File name must only contain alphanumeric characters (besides file extension) and be non-empty.");
+      else if (this.isDuplicateFile(csvFile.name))
         alert("File already exists! Please remove it first before reuploading.");
+      else if (!this.isValidSize(csvFile.size))
+        alert("File must be <= 1MB in size!");
       else {
-        alert("TODO: upload this file to server");
-        store.commit("addDataSet", fileName);
+        let serverURL = store.state.serverURL + 'Dataset/UploadDataset';
+        const formData = new FormData();
+        formData.append('file', csvFile);
+        await fetch(serverURL, {
+          method: 'POST',
+          headers: {
+            'filename': csvFile.name,
+            'client-ip': store.state.clientIP,
+            'session-id': store.state.userSessionID
+          },
+          body: formData
+        }).then(response => console.log(response));
+      
+        store.commit("addDataSet", csvFile.name);
       }
     }
   }
